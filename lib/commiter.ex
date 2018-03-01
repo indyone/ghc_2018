@@ -1,6 +1,6 @@
 defmodule Commiter do
-   def commit(list) do
-       {:ok, file} = File.open "hello", [:write]
+   def commit(list, out) do
+       {:ok, file} = File.open out, [:write]
    
        Enum.each(list, fn {id, rides} -> 
         IO.write(file, id)
