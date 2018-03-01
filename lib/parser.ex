@@ -31,7 +31,7 @@ def process(line, %{}) do
     vehicles: String.to_integer(vehicles),
     bonus: String.to_integer(bonus),
     time: String.to_integer(time)}
-    {acc, String.to_integer(rides)}
+    {acc, String.to_integer(rides) - 1}
 end
 def process(line, acc, rides) do
     [x_s, y_s, x_l, y_l, earliest, latest] = line |> String.split() 
@@ -42,8 +42,13 @@ def process(line, acc, rides) do
         start: {String.to_integer(x_s), String.to_integer(y_s)},
         end: {String.to_integer(x_l), String.to_integer(y_l)},
         earliest: String.to_integer(earliest),
-        latest: String.to_integer(latest)}
+        latest: String.to_integer(latest),
+        distance: distance({String.to_integer(x_s), String.to_integer(y_s)}, {String.to_integer(x_l), String.to_integer(y_l)})}
     {Map.put(acc, :rides, [new | list]), rides - 1}
-
 end
+
+def distance({from_x, from_y}, {to_x, to_y}) do
+    abs(from_x - to_x) + abs(from_y - to_y)
+end
+
 end
